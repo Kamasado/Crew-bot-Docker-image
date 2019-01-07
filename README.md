@@ -1,1 +1,1 @@
-# osu-Crew-ranking-bot
+Bot para osu!Crew.

@@ -1,0 +1,10 @@
+**Lista de comandos disponibles:**
+/-
+**-user** <create | delete> <@Discord user> <Osu user>
+-=
+**Ejemplo:** -user create @Vans `_Vanslight_`
+/-
+
+**-exp** <give | take> <@Discord user> <cantidad>
+-=
+**Ejemplo:** -exp give @Vans 1000
