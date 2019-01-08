@@ -59,8 +59,11 @@ module.exports = (arg, msg) => {
       return;
     }); 
   } else if (arg[0] === 'delete') {
-    if (!(/^<@[0-9]+>$/.test(arg[1]))) {
-      msg.reply(errmsg);
+    if (/^<@[0-9]+>$/.test(arg[1])) {
+      arg[1] = arg[1].replace(/<@/, '').replace(/>/, '');
+    } else if (/[0-9]+/) {
+    } else {
+      msg.channel.send(errmsg);
       return;
     }
     
