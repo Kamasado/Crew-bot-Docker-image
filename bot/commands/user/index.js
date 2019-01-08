@@ -38,13 +38,16 @@ module.exports = (arg, msg) => {
   } 
   
   if (arg[0] === 'register') {
-    if (!/^<@[0-9]+>$/.test(arg[1])) {
+    if (/^<@[0-9]+>$/.test(arg[1])) {
+      arg[1] = arg[1].replace(/<@/, '').replace(/>/, '');
+    } else if (/[0-9]+/) {
+    } else {
       msg.channel.send(errmsg);
       return;
     }
     
     user.create({
-      discordId: arg[1].replace(/<@/, '').replace(/>/, ''),
+      discordId: arg[1],
       osuUser: arg[2],
       mode: arg[3]
     }, (err, newuser) => {
