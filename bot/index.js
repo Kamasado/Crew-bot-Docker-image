@@ -11,7 +11,9 @@ const user = require("./userModel");
 
 // Connect to MongoDB and set connection variable
 mongoose.connect(
-  `mongodb://${DBUSER}:${DBPASS}@ds255364.mlab.com:55364/osucrew`,
+  `mongodb://${process.env.DBUSER}:${
+    process.env.DBPASS
+  }@ds255364.mlab.com:55364/osucrew`,
   { useNewUrlParser: true }
 );
 
