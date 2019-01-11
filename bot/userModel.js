@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 // Setup schema
 var userSchema = mongoose.Schema({
   discordId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true
   },
