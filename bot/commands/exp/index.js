@@ -11,6 +11,15 @@ const errmsg = helpers.error(
 );
 
 module.exports = (arg, msg) => {
+  if (!msg.member.roles.has("530454438008061962")) {
+    const error = helpers.error(
+      "Sin permisos suficientes",
+      "Solo los <@&530454438008061962> pueden usar este comando."
+    );
+    msg.channel.send(error);
+    return;
+  }
+
   const subCommand = arg[0];
   const newArgs = arg.slice(1);
   const subCommandPath = `${__dirname}/${subCommand}`;
