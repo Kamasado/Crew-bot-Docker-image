@@ -1,16 +1,18 @@
+const user = require(__basedir + "/userModel");
 const fs = require("fs");
 
-const config = JSON.parse(fs.readFileSync(__basedir + "/bot_config.json"));
-const helpers = require(__basedir + "/commands/helpers");
+const errmsg = "Sintaxis incorrecta.";
 
-const errmsg = helpers.error(
-  "Sintaxis incorrecta",
-  `Uso: **${
-    config.prefix
-  }exp** <**give** | **take**> <**@mención** | **id**> <**exp**>`
-);
+function valid(arg) {
+  return true;
+}
 
 module.exports = (arg, msg) => {
+  if (!valid(arg)) {
+    msg.channel.send(errmsg);
+    return;
+  }
+
   const subCommand = arg[0];
   const newArgs = arg.slice(1);
   const subCommandPath = `${__dirname}/${subCommand}`;
@@ -20,8 +22,7 @@ module.exports = (arg, msg) => {
     if (!err) {
       const cmdjs = require(subCommandPath);
       cmdjs(newArgs, msg);
-    } else {
-      msg.channel.send(errmsg);
     }
+    return;
   });
 };

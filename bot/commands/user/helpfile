@@ -1,5 +1,0 @@
-**Comando: user**
-/-
-Sintaxis:
--=
-**-user** <register | delete> <@Discord user> <Osu user> <std | mania>

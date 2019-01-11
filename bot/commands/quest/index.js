@@ -1,40 +1,27 @@
+const fs = require("fs");
 
-const user = require('../../userModel');
-const fs = require('fs');
+const config = JSON.parse(fs.readFileSync(__basedir + "/bot_config.json"));
+const helpers = require(__basedir + "/commands/helpers");
 
-const errmsg = 'Sintaxis incorrecta.\nEscribe **-ayuda quest** para más información';
-
-function valid(arg) {
-  if (!arg[0] === 'set' || arg.length !== 3) {
-    return false;
-  }
-  
-  return true;
-}
+const errmsg = helpers.error(
+  "Sintaxis incorrecta",
+  `Uso: **${
+    config.prefix
+  }quest** <**give** | **take**> <**@mención** | **id**> <**cantidad**>`
+);
 
 module.exports = (arg, msg) => {
-  if (!valid(arg)) {
-    msg.channel.send(errmsg);
-    return;
-  }
-  
-  let pelotaRol = msg.guild.roles.get("530454438008061962");
-  if (!msg.member.roles.has(pelotaRol.id)) {
-    return;
-  }
-  
-  var fdoc = { osuUser: arg[1] };
-  if (/^<@[0-9]+>$/.test(arg[1])) {
-    fdoc = { discordId: arg[1].replace(/<@/, '').replace(/>/, '') };
-  }
+  const subCommand = arg[0];
+  const newArgs = arg.slice(1);
+  const subCommandPath = `${__dirname}/${subCommand}`;
 
-  user.findOneAndUpdate(fdoc, { $set: { quests: arg[2], } } , (err, u) => {
-    if (!u) {
-      msg.reply(`No existe el usuario ${arg[1]}.`);
-      return;
+  // if a folder with the command name exists, run it
+  fs.access(subCommandPath, fs.F_OK, err => {
+    if (!err) {
+      const cmdjs = require(subCommandPath);
+      cmdjs(newArgs, msg);
+    } else {
+      msg.channel.send(errmsg);
     }
-    msg.channel.send(`Se ha establecido el numero de quests a ${arg[2]}\n**Discord ID:** ${u.discordId}`);
-    return;
-  })
-  
-}
+  });
+};
