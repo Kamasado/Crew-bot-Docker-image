@@ -25,7 +25,8 @@ module.exports = (arg, msg) => {
   user.findOne({ discordId: id }, (err, u) => {
     // if user not registered ->
     if (!u) {
-      let embed = helpers.embed
+      let embed = helpers
+        .embed()
         .setAuthor(msg.author.username, msg.author.avatarURL)
         .addField(
           "¡No estas registrado!",
