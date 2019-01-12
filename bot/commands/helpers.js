@@ -10,7 +10,7 @@ const helpers = {
     if (/^<@[0-9]+>$/.test(x)) {
       id = x.replace(/<@/, "").replace(/>/, "");
       return id;
-    } else if (/^<@![0-9]+>$/.test()) {
+    } else if (/^<@![0-9]+>$/.test(x)) {
       id = x.replace(/<@!/, "").replace(/>/, "");
       return id;
     } else if (/[0-9]+/.test(x)) {
