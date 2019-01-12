@@ -2,7 +2,7 @@ FROM kamasado/ubuntu_base
 
 USER 0
 
-RUN git clone https://github.com/Kamasado/Crew-bot /app
+RUN git clone https://github.com/Kamasado/Crew-bot.git /app
 RUN chown kamasado /app && yarn
 
 USER kamasado
